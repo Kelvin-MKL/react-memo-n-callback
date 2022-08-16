@@ -15,8 +15,8 @@ It can optimise the program performance.
 
 # key takeaway
 
-:one:React.memo() -> higher order API, shadow comparing props, (same) ? use previous value : render new props
-useMemo -> memorise caching value, applicable to non-primative values through props eg. obj, array.
-useCallback -> memorise func's output, applicable to funcs through props.
+:one: React.memo() -> higher order API, shadow comparing props, (same) ? use previous value : render new props
+:two: useMemo -> memorise caching value, applicable to non-primative values through props eg. obj, array.
+:three: useCallback -> memorise func's output, applicable to funcs through props.
 
 All these aim to optimising performance.
