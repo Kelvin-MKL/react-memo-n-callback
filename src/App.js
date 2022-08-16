@@ -1,24 +1,34 @@
 import "./App.css";
-import { useState, useMemo } from "react";
+import { useState, memo, useMemo, useCallback } from "react";
 
-function Square({ color }) {
+const Square = ({ color, onClick }) => {
   console.log("Square func is called.");
-  return (
-    <div style={{ height: "50px", width: "50px", background: color }}></div>
+  return useMemo(
+    () => (
+      <>
+        {console.log(`Color is changed to ${color}`)}
+        <div
+          style={{ height: "50px", width: "50px", background: color }}
+          onClick={onClick}
+        ></div>
+      </>
+    ),
+    [color]
   );
-}
+};
+
+const SquareMemoed = memo(Square);
 
 function App() {
   const [renderCounter, setRenderCounter] = useState(0);
   const [color, setColor] = useState("blue");
 
-  const squareMemo = useMemo(() => {
-    console.log("SquareMemo is called.");
-    return <Square color={color}></Square>;
-  }, [color]);
-
   const renderMessage = `The entire app is rendered ${renderCounter} times.`;
   console.log(renderMessage);
+
+  const handleClick = useCallback(() => {
+    console.log("Square is clicked.");
+  }, []);
 
   return (
     <div className='App'>
@@ -32,13 +42,14 @@ function App() {
         <h4>{renderMessage}</h4>
       </div>
       <div>
-        {squareMemo}
+        <SquareMemoed color={color} onClick={handleClick}></SquareMemoed>
         <button
           style={{ marginTop: "30px" }}
           onClick={() => setColor(color === "blue" ? "red" : "blue")}
         >
           Change Color
         </button>
+        <div></div>
       </div>
     </div>
   );
